@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: #f6f2ea;
+  --color-paper-dark: #ebe5d8;
+  --color-ink: #14211f;
+  --color-ink-soft: #4a5a57;
+  --color-workshop: #0f5c55;
+  --color-workshop-dark: #0a423d;
+  --color-signal: #ff6a2b;
+  --color-signal-dark: #e5530f;
+  --color-mustard: #f2b84b;
+
+  --font-display: var(--font-bricolage);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+
+  --shadow-hard: 4px 4px 0 0 #14211f;
+  --shadow-hard-sm: 2px 2px 0 0 #14211f;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html { scroll-behavior: smooth; }
+body { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); }
+h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+
+/* blueprint dot grid, used on hero and section backgrounds */
+.bg-blueprint {
+  background-image: radial-gradient(rgb(20 33 31 / 0.16) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+
+  /* one heading style for every section */
+  .section-title { @apply font-display text-3xl font-extrabold text-ink sm:text-4xl; }
+  .section-sub { @apply mt-3 max-w-2xl text-base leading-relaxed text-ink-soft; }
+
+  /* one button style for the whole app */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border-2 border-ink px-5 py-2.5
+      text-sm font-bold shadow-hard-sm transition-all
+      hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hard
+      active:translate-x-0 active:translate-y-0 active:shadow-none
+      disabled:pointer-events-none disabled:opacity-50;
   }
-}
+  .btn-primary { @apply btn bg-signal text-white; }
+  .btn-dark { @apply btn bg-ink text-paper; }
+  .btn-ghost { @apply btn bg-white text-ink; }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  .input {
+    @apply w-full rounded-lg border-2 border-ink/80 bg-white px-3.5 py-2.5 text-sm outline-none
+      transition placeholder:text-ink-soft/60 focus:border-workshop focus:shadow-hard-sm;
+  }
+  .label { @apply mb-1.5 block text-sm font-semibold; }
+  .error-text { @apply mt-1 text-xs font-medium text-red-600; }
 }
