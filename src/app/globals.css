@@ -19,9 +19,23 @@
   --shadow-hard-sm: 2px 2px 0 0 #14211f;
 }
 
-html { scroll-behavior: smooth; }
-body { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); }
-h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
 
 /* blueprint dot grid, used on hero and section backgrounds */
 .bg-blueprint {
@@ -29,29 +43,44 @@ h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
   background-size: 22px 22px;
 }
 
-@layer components {
-  .container-x { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
 
-  /* one heading style for every section */
-  .section-title { @apply font-display text-3xl font-extrabold text-ink sm:text-4xl; }
-  .section-sub { @apply mt-3 max-w-2xl text-base leading-relaxed text-ink-soft; }
+/* one heading style for every section */
+@utility section-title {
+  @apply font-display text-3xl font-extrabold text-ink sm:text-4xl;
+}
 
-  /* one button style for the whole app */
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg border-2 border-ink px-5 py-2.5
-      text-sm font-bold shadow-hard-sm transition-all
-      hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hard
-      active:translate-x-0 active:translate-y-0 active:shadow-none
-      disabled:pointer-events-none disabled:opacity-50;
-  }
-  .btn-primary { @apply btn bg-signal text-white; }
-  .btn-dark { @apply btn bg-ink text-paper; }
-  .btn-ghost { @apply btn bg-white text-ink; }
+@utility section-sub {
+  @apply mt-3 max-w-2xl text-base leading-relaxed text-ink-soft;
+}
 
-  .input {
-    @apply w-full rounded-lg border-2 border-ink/80 bg-white px-3.5 py-2.5 text-sm outline-none
-      transition placeholder:text-ink-soft/60 focus:border-workshop focus:shadow-hard-sm;
-  }
-  .label { @apply mb-1.5 block text-sm font-semibold; }
-  .error-text { @apply mt-1 text-xs font-medium text-red-600; }
+/* one button style for the whole app */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg border-2 border-ink px-5 py-2.5 text-sm font-bold shadow-hard-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-hard active:translate-x-0 active:translate-y-0 active:shadow-none disabled:pointer-events-none disabled:opacity-50;
+}
+
+@utility btn-primary {
+  @apply btn bg-signal text-white;
+}
+
+@utility btn-dark {
+  @apply btn bg-ink text-paper;
+}
+
+@utility btn-ghost {
+  @apply btn bg-white text-ink;
+}
+
+@utility input {
+  @apply w-full rounded-lg border-2 border-ink/80 bg-white px-3.5 py-2.5 text-sm outline-none transition placeholder:text-ink-soft/60 focus:border-workshop focus:shadow-hard-sm;
+}
+
+@utility label {
+  @apply mb-1.5 block text-sm font-semibold;
+}
+
+@utility error-text {
+  @apply mt-1 text-xs font-medium text-red-600;
 }
