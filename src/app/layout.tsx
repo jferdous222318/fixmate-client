@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${bricolage.variable} ${inter.variable} ${jetbrains.variable}`}>
-      <body className="min-h-screen antialiased">
+    <body className="min-h-screen antialiased" suppressHydrationWarning>
         {children}
         <Toaster position="top-right" richColors closeButton />
       </body>
