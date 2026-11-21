@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, Hammer, PackageSearch } from "lucide-react";
 import Hero from "@/components/home/Hero";
+import HowItWorks from "@/components/home/HowItWorks";
+import Categories from "@/components/home/Categories";
+import WhyChoose from "@/components/home/WhyChoose";
 import ServiceCard from "@/components/services/ServiceCard";
 import EmptyState from "@/components/ui/EmptyState";
 import { getPublic } from "@/lib/server-api";
@@ -8,7 +11,10 @@ import type { ServicesPage } from "@/lib/types";
 
 export default async function Home() {
     // 6 latest approved + available services (server sorts by createdAt desc, limit 6)
-    const featured = await getPublic<ServicesPage>("/api/services?sort=newest&limit=6");
+    const [featured, stats] = await Promise.all([
+        getPublic<ServicesPage>("/api/services?sort=newest&limit=6"),
+        getPublic<{ technicians: number; services: number; completedJobs: number }>("/api/stats/public"),
+    ]);
     const services = featured?.services ?? [];
 
     return (
@@ -36,6 +42,10 @@ export default async function Home() {
                     </div>
                 )}
             </section>
+
+            <HowItWorks />
+            <Categories />
+            <WhyChoose stats={stats} />
 
             {/* technician CTA */}
             <section className="container-x pb-4">
