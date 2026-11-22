@@ -9,9 +9,9 @@ FixMate is a role-based repair service platform. Verified technicians list the r
 
 | Role | Email | Password |
 |------|-------|----------|
-| Admin | admin@fixmate.com | YOUR_PASSWORD |
-| Technician | tech1@fixmate.com | YOUR_PASSWORD |
-| Customer | customer1@fixmate.com | YOUR_PASSWORD |
+| Admin | admin@fixmate.com | Fixmate123|
+| Technician | tech1@fixmate.com | Fixmate123 |
+| Customer | customer1@fixmate.com | Fixmate123|
 
 Stripe test card: `4242 4242 4242 4242`, any future date, any CVC.
 
