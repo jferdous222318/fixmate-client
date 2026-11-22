@@ -18,8 +18,10 @@ export default function SignInForm({ redirectTo, registered }: { redirectTo: str
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
 
-    const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
+    const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm((f) => ({ ...f, [k]: e.target.value }));
+        setErrors((er) => ({ ...er, [k]: "" }));
+    };
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -28,7 +30,7 @@ export default function SignInForm({ redirectTo, registered }: { redirectTo: str
         else if (!EMAIL_RE.test(form.email.trim())) next.email = "Enter a valid email address";
         if (!form.password) next.password = "Password is required";
         setErrors(next);
-        if (Object.keys(next).length) return;
+        if (Object.values(next).some(Boolean)) return;
 
         setLoading(true);
         const { data, error } = await authClient.signIn.email({
@@ -38,7 +40,11 @@ export default function SignInForm({ redirectTo, registered }: { redirectTo: str
         setLoading(false);
 
         if (error) {
-            toast.error(error.status === 401 ? "Wrong email or password" : error.message || "Sign in failed");
+            // show the real reason instead of a vague message
+            if (error.status === 401) toast.error("Wrong email or password");
+            else if (error.status === 429) toast.error("Too many attempts. Please wait a minute and try again.");
+            else if (error.status === 403) toast.error(error.message || "This address is not allowed to sign in");
+            else toast.error(error.message || `Sign in failed (${error.status ?? "network error"})`);
             return;
         }
 
